@@ -82,7 +82,6 @@
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">bucket 1</h5>
-                <a href="#" class="btn btn-primary">Details</a>
                 <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteBucket">delete</a>
             </div>
         </div>
@@ -90,8 +89,6 @@
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">bucket 2</h5>
-
-                <a href="#" class="btn btn-primary">Details</a>
                 <a href="#" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteBucket">delete</a>
             </div>
         </div>
@@ -99,7 +96,27 @@
 
 
 
-
+    <script>
+        const handleSubmit = async () => {
+            try {
+                event.preventDefault();
+                const body = {
+                    username: event.target.username.value,
+                    password: event.target.password.value
+                };
+                const url = "https://g75ccxjvcb.execute-api.us-west-2.amazonaws.com/dev/login";
+                const { data } = await axios.post(url, body);
+                if (data.errorMessage) {
+                    throw new Error(data.errorMessage);
+                }
+                console.log(data.AuthenticationResult);
+                window.location.href = "dashboard.html";
+            } catch (error) {
+                window.alert(error.message);
+            }
+        };
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
