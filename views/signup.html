@@ -25,32 +25,47 @@
     </nav>
     <br>
     <div class="container">
-        <form>
+        <form onSubmit="handleSubmit(); return false">
             <div class="form-group">
-                <label for="firstname">What is your First Name?</label>
-                <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp"
-                    placeholder="First Name">
-                <label for="lastname">What is your Last Name?</label>
-                <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp"
-                    placeholder="Last Name">
-                <label for="email">Email address or Username</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                    placeholder="Enter email">
+                <label for="username">What is your Username?</label>
+                <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
+                    placeholder="Username">
+                <label for="email">What is your Email?</label>
+                <input type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
+                <label for="password">What is your Password?</label>
+                <input type="password" class="form-control" id="password" aria-describedby="emailHelp"
+                    placeholder="Password">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your creds with anyone
                     else.</small>
-            </div>
-            <div class="form-group">
-                <label for="Password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
-                <br>
-                <label for="exampleInputPassword1">Retype Password</label>
-                <input type="password" class="form-control" id="retypepassword" placeholder="Retype Password">
             </div>
             <button type="submit" id="signUpButton" class="btn btn-primary">Sign Up</button>
             <small><a href="index.html">Already have an account ? Log in here!</a></small>
         </form>
     </div>
 
+    <script>
+        const handleSubmit = async () => {
+            try {
+                event.preventDefault();
+                const body = {
+                    username: event.target.username.value,
+                    email: event.target.email.value,
+                    password: event.target.password.value
+                };
+                const url = "https://g75ccxjvcb.execute-api.us-west-2.amazonaws.com/dev/register";
+                const { data } = await axios.post(url, body);
+                if (data.errorMessage) {
+                    throw new Error(data.errorMessage);
+                }
+                console.log(data.AuthenticationResult);
+                windows.alert('User created')
+                window.location.href = "login.html";
+            } catch (error) {
+                window.alert(error.message);
+            }
+        };
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
 </body>

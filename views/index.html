@@ -1,79 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-        
-    <meta charset="utf-8">
-        
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous">
-        
-    <link rel="stylesheet" href="styles.css">
-        <title>Log In</title>
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Log In</title>
 </head>
+​
 
 <body>
-        
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
-        
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-                crossorigin="anonymous"></script>
-        
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-                crossorigin="anonymous"></script>
-
-        <nav class="navbar navbar-light bg-light">
-                <span class="navbar-brand mb-0 h1">Ownzones code challenge</span>
-            </nav>
-        <div class="container">
-                <br>
-                <form id="signUp">
-                        <div class="form-group">
-                                <label for="email">Email address or Username</label>
-                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                                        placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your creds with
-                    anyone
-                                        else.</small>
-                            </div>
-                        <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Password">
-                            </div>
-                        <button type="submit" id="submitButton" class="btn btn-primary"><a href=dashboard.html>Log
-                    in</a></button>
-                        <small><a href="signup.html">No account ? No issues, sign up here!</a></small>
-                    </form>
-            </div>
-
-        
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    ​
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Ownzones code challenge</span>
+    </nav>
+    <div class="container">
+        <br />
+        <form onSubmit="handleSubmit(); return false">
+            <div class="form-group">
+                <label for="email">Username</label>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp"
+                    placeholder="Enter email" />
+                <small id="emailHelp" class="form-text text-muted">We'll never share your creds with anyone
+                    else.</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+            </div>
+            <button type="submit" class="btn btn-primary">Log in</button>
+            <small><a href="signup.html">No account ? No issues, sign up here!</a></small>
+        </form>
+    </div>
+    ​
     <script>
-        const signUp = document.getElementById("signUp");
-        signUp.addEventListener("submitButton", function (e) {
-            e.preventDefault();
-
-            const formData = new formData(this);
-            fetch("https://g75ccxjvcb.execute-api.us-west-2.amazonaws.com/dev/request", {
-                method: "POST",
-                body: formData
-            }).then(function (response) {
-                return response.text();
-            }).then(function (text) {
-                console.log(text);
-            }).catch(function (error) {
-                console.log(error)
-            })
-        });
+        const handleSubmit = async () => {
+            try {
+                event.preventDefault();
+                const body = {
+                    username: event.target.username.value,
+                    password: event.target.password.value
+                };
+                const url = "https://g75ccxjvcb.execute-api.us-west-2.amazonaws.com/dev/login";
+                const { data } = await axios.post(url, body);
+                if (data.errorMessage) {
+                    throw new Error(data.errorMessage);
+                }
+                console.log(data.AuthenticationResult);
+                window.location.href = "dashboard.html";
+            } catch (error) {
+                window.alert(error.message);
+            }
+        };
     </script>
-
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
