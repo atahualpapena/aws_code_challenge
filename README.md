@@ -14,9 +14,6 @@
 4. AWS Cognito
 
 
-Testing URL:
-``` https://s3-us-west-2.amazonaws.com/ownzonescodechallenge.com/index.html ```
-
 **Infrastructure**
 
 • The infrastructure was first created manually and then terraformed. 
