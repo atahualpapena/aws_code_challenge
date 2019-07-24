@@ -58,16 +58,14 @@
                     throw new Error(data.errorMessage);
                 }
                 console.log(data.AuthenticationResult);
-                windows.alert('User created')
-                window.location.href = "login.html";
+                window.alert('User created')
+                window.location.href = "index.html";
             } catch (error) {
                 window.alert(error.message);
             }
         };
     </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
 </body>
 
 </html>
