@@ -23,7 +23,7 @@
 
     <div class="container">
         <h2>Ownzones code challenge</h2>
-        <form>
+        <form id="signUp">
             <div class="form-group">
                 <label for="email">Email address or Username</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
@@ -35,11 +35,29 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Password">
             </div>
-            <button type="submit" id="submitButton" class="btn btn-primary"><a href="dashboard.html">Log in</a></button>
+            <button type="submit" id="submitButton" class="btn btn-primary"><a href=dashboard.html>Log in</a></button>
             <small><a href="signup.html">No account ? No issues, sign up here!</a></small>
         </form>
     </div>
 
+    <script>
+        const signUp = document.getElementById("signUp");
+        signUp.addEventListener("submitButton", function (e) {
+            e.preventDefault();
+
+            const formData = new formData(this);
+            fetch("https://g75ccxjvcb.execute-api.us-west-2.amazonaws.com/dev/request", {
+                method: "POST",
+                body: formData
+            }).then(function (response) {
+                return response.text();
+            }).then(function (text) {
+                console.log(text);
+            }).catch(function (error) {
+                console.log(error)
+            })
+        });
+    </script>
 
 
 </body>
